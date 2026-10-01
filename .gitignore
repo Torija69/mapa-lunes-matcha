@@ -1,0 +1,22 @@
+
+# Reglas comunes (catalogo-proyectos/plantillas/gitignore)
+.DS_Store
+*.bak
+*.log
+*.tmp
+node_modules/
+__pycache__/
+.venv/
+dist/
+.env
+.env.*
+*.pem
+*.key
+credentials*
+*.salt
+*service_role*
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+data/session-state.json
