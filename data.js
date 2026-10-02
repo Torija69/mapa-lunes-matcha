@@ -1,3 +1,117 @@
+/* Configuración de la página (textos, lugares, grupos, fuentes). Ver catalogo-proyectos/plantillas/mapa-libro/LEEME.md */
+const CONFIG = {
+  "libro": "Mis lunes con aroma a matcha",
+  "autor": "Michiko Aoyama",
+  "antetitulo": "Michiko Aoyama · Novela coral",
+  "titulo": "Mapa de relaciones del Café Matcha",
+  "descripcion": "Mapa interactivo de personajes de la novela Mis lunes con aroma a matcha, de Michiko Aoyama: el Maestro, Kippei, los clientes recurrentes y la red que conecta Tokio con Kioto — y con Sídney.",
+  "intro": "<em>Mis lunes con aroma a matcha</em> es la segunda entrega de la bilogía \"El pequeño café de Tokio\": doce capítulos —uno por mes— que arrancan junto al Maestro en el Café Marble un lunes de enero y se despliegan, cliente a cliente, hasta la antigua Kioto. Explora quién conoce a quién, qué vínculos son explícitos y cuáles solo se insinúan, y cómo cinco personajes —Mark, Atsuko, Teruya, Asami y Takumi— tienden un hilo hasta la novela anterior y hasta Sídney.",
+  "favicon": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%234a6b2f'/%3E%3Ccircle cx='16' cy='17' r='7' fill='%23f5f1e2'/%3E%3Cpath d='M12 12c0-2 1.6-2 1.6-4M16 12c0-2 1.6-2 1.6-4M20 12c0-2 1.6-2 1.6-4' stroke='%237fa65c' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E",
+  "icono": "<rect width=\"32\" height=\"32\" rx=\"7\" fill=\"var(--color-primary)\"/> <circle cx=\"16\" cy=\"17\" r=\"7\" fill=\"var(--color-surface)\"/> <path d=\"M12 12c0-2 1.6-2 1.6-4M16 12c0-2 1.6-2 1.6-4M20 12c0-2 1.6-2 1.6-4\" stroke=\"var(--color-primary)\" stroke-width=\"1.5\" fill=\"none\" stroke-linecap=\"round\"/>",
+  "lugares": {
+    "tokio": {
+      "nombre": "Tokio",
+      "descripcion": "verde matcha — personaje o lugar en Tokio",
+      "color": {
+        "claro": "#4a6b2f",
+        "oscuro": "#8fc26a"
+      }
+    },
+    "kioto": {
+      "nombre": "Kioto",
+      "descripcion": "índigo — personaje o lugar en Kioto",
+      "color": {
+        "claro": "#35506a",
+        "oscuro": "#7ea3c4"
+      }
+    },
+    "sidney": {
+      "nombre": "Sídney",
+      "descripcion": "turquesa — recurrente, vinculado a Sídney",
+      "color": {
+        "claro": "#1c7d70",
+        "oscuro": "#5cc0af"
+      }
+    }
+  },
+  "leyendaAmbos": "Anillo bicolor — se mueve entre Tokio y Kioto",
+  "leyendaLugar": "Rombo — lugar (Café Marble / Kioto)",
+  "notaLeyenda": "El color de relleno es una paleta estacional propia de este mapa: la novela no asigna un color por capítulo, a diferencia de su precuela.",
+  "grupos": {
+    "cafe": {
+      "nombre": "Círculo del café",
+      "color": "#4a6b2f"
+    },
+    "tokio": {
+      "nombre": "Red de Tokio",
+      "color": "#8a6b3f"
+    },
+    "kioto": {
+      "nombre": "Red de Kioto",
+      "color": "#35506a"
+    },
+    "puente": {
+      "nombre": "Puente Tokio–Kioto",
+      "color": "#9c5b3f"
+    },
+    "retorno": {
+      "nombre": "Recurrentes / Sídney",
+      "color": "#1c7d70",
+      "etiqueta": "Recurrente / Sídney"
+    }
+  },
+  "destacados": [
+    "maestro",
+    "miho",
+    "kippei"
+  ],
+  "panel": {
+    "antetitulo": "Estructura coral",
+    "titulo": "Un café, doce meses, dos ciudades",
+    "texto": "Cada capítulo adopta el punto de vista de un personaje distinto, empezando y terminando en el Café Marble de Tokio tras pasar por Kioto durante el verano y el otoño. Pulsa cualquier nodo del mapa —o cualquier capítulo de la franja inferior— para ver su ficha, sus vínculos explícitos e implícitos, y el capítulo en el que se revelan.",
+    "consejo": "Consejo: usa los filtros de arriba para aislar el círculo del café, la red que crece en Tokio, la red de Kioto o los personajes recurrentes que tienden el hilo hasta Sídney."
+  },
+  "fuentes": [
+    {
+      "nombre": "Booklog — ficha y capítulos",
+      "url": "https://booklog.jp/item/1/4299044096"
+    },
+    {
+      "nombre": "Booklog — lista de personajes por capítulo",
+      "url": "https://booklog.jp/item/1/4299020286"
+    },
+    {
+      "nombre": "Ameblo — resumen capítulo a capítulo",
+      "url": "https://ameblo.jp/nisemonomazyo/entry-12903153147.html"
+    },
+    {
+      "nombre": "Happy no dokusho note — reseña detallada",
+      "url": "https://book.kokoro-aozora.com/entry/aoyamamichiko/getsuyoubinomacchacafe"
+    },
+    {
+      "nombre": "Da Vinci Web — entrevista con la autora",
+      "url": "https://ddnavi.com/article/d855481/a/"
+    },
+    {
+      "nombre": "Fresh Fiction — reseña en inglés",
+      "url": "https://freshfiction.com/review.php?id=96926"
+    },
+    {
+      "nombre": "Life She Loves — reseña en inglés",
+      "url": "https://www.lifesheloves.com/my-asian-era/matcha-on-monday-michiko-aoyama"
+    },
+    {
+      "nombre": "Zenda Libros — reseña en español",
+      "url": "https://www.zendalibros.com/michiko-aoyama-historias-agridulces-de-pequenas-vidas-en-japon/"
+    },
+    {
+      "nombre": "Planeta de Libros — ficha oficial",
+      "url": "https://www.planetadelibros.com/libro-mis-lunes-con-aroma-a-matcha/445451"
+    }
+  ],
+  "notaPie": "Mapa no oficial, elaborado a partir de reseñas y extractos públicos de la novela con fines de análisis literario."
+};
+
 /* ============================================================
    Datos del mapa de relaciones — "Mis lunes con aroma a matcha"
    (Michiko Aoyama), segunda entrega de la bilogía "El pequeño

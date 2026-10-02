@@ -1,9 +1,62 @@
 /* ============================================================
-   Mapa de relaciones — interacción (D3 force graph)
+   Plantilla de mapa de relaciones de un libro — motor (D3)
+   NO hace falta tocar este fichero: todo lo propio de cada libro
+   va en data.js (CONFIG, CHAPTERS, NODES y EDGES).
    ============================================================ */
 
 (function () {
   'use strict';
+
+  /* ---------- Página a partir de CONFIG ---------- */
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const LUGARES = CONFIG.lugares || {};
+  const LUGAR_IDS = Object.keys(LUGARES);
+  const AMBOS = CONFIG.ambos || LUGAR_IDS.slice(0, 2);
+  const GRUPOS = CONFIG.grupos || {};
+
+  document.title = `Mapa de relaciones — ${CONFIG.libro}`;
+  const metaDesc = document.querySelector('meta[name="description"]');
+  if (metaDesc) metaDesc.content = CONFIG.descripcion || `Mapa interactivo de personajes de ${CONFIG.libro}, de ${CONFIG.autor}.`;
+  document.getElementById('cfg-eyebrow').textContent = CONFIG.antetitulo || `${CONFIG.autor}`;
+  document.getElementById('cfg-titulo').textContent = CONFIG.titulo || `Mapa de relaciones de ${CONFIG.libro}`;
+  document.getElementById('cfg-intro').innerHTML = CONFIG.intro || '';
+  document.getElementById('cfg-panel-eyebrow').textContent = CONFIG.panel?.antetitulo || 'Estructura';
+  document.getElementById('cfg-panel-titulo').textContent = CONFIG.panel?.titulo || CONFIG.libro;
+  document.getElementById('cfg-panel-texto').innerHTML = CONFIG.panel?.texto || 'Pulsa cualquier nodo del mapa —o cualquier capítulo de la franja inferior— para ver su ficha y sus vínculos.';
+  document.getElementById('cfg-panel-consejo').innerHTML = CONFIG.panel?.consejo || 'Consejo: usa los filtros de arriba para aislar cada grupo de personajes.';
+
+  const groupFilters = document.getElementById('group-filters');
+  Object.entries(GRUPOS).forEach(([id, g]) => {
+    if (g.filtro === false) return;
+    const b = document.createElement('button');
+    b.className = 'chip'; b.dataset.group = id; b.textContent = g.nombre;
+    groupFilters.appendChild(b);
+  });
+
+  const legendBody = document.getElementById('legend-body');
+  const legendRows = [];
+  LUGAR_IDS.forEach((id) => legendRows.push(`<div class="legend-row"><span class="legend-swatch" style="box-shadow:0 0 0 2.5px var(--ring-${id}) inset"></span> Anillo ${esc(LUGARES[id].descripcion || '— personaje o lugar en ' + LUGARES[id].nombre)}</div>`));
+  if (AMBOS.length === 2) legendRows.push(`<div class="legend-row"><span class="legend-swatch" style="background:conic-gradient(var(--ring-${AMBOS[0]}) 0deg 180deg, var(--ring-${AMBOS[1]}) 180deg 360deg)"></span> ${esc(CONFIG.leyendaAmbos || `Anillo bicolor — se mueve entre ${LUGARES[AMBOS[0]]?.nombre} y ${LUGARES[AMBOS[1]]?.nombre}`)}</div>`);
+  legendRows.push('<div class="legend-row"><span class="legend-line solid"></span> Vínculo explícito (familia, pareja, trabajo)</div>');
+  legendRows.push('<div class="legend-row"><span class="legend-line dashed"></span> Vínculo implícito (coincidencia, eco narrativo)</div>');
+  legendRows.push(`<div class="legend-row"><span class="legend-swatch place-shape"></span> ${esc(CONFIG.leyendaLugar || 'Rombo — lugar')}</div>`);
+  if (CONFIG.notaLeyenda) legendRows.push(`<p class="legend-hint">${esc(CONFIG.notaLeyenda)}</p>`);
+  legendBody.innerHTML = legendRows.join('');
+
+  if (CONFIG.icono) document.getElementById('cfg-icono').innerHTML = CONFIG.icono;
+  if (CONFIG.favicon) document.querySelector('link[rel="icon"]').href = CONFIG.favicon;
+  const fuentes = document.getElementById('cfg-fuentes');
+  fuentes.innerHTML = (CONFIG.fuentes || []).map((f) => `<a href="${esc(f.url)}" target="_blank" rel="noopener">${esc(f.nombre)}</a>`).join(' · ');
+  if (CONFIG.notaPie) document.getElementById('cfg-nota-pie').textContent = CONFIG.notaPie;
+
+  function paintRingVars() {
+    const c = ringColors();
+    LUGAR_IDS.forEach((id) => root.style.setProperty(`--ring-${id}`, c[id]));
+  }
+  function ringOf(d, c) {
+    if (d.place === 'ambos') return 'url(#grad-ambos)';
+    return c[d.place] || c[LUGAR_IDS[0]] || c.faint;
+  }
 
   /* ---------- Theme toggle ---------- */
   const themeBtn = document.querySelector('[data-theme-toggle]');
@@ -19,14 +72,16 @@
     theme = theme === 'dark' ? 'light' : 'dark';
     root.setAttribute('data-theme', theme);
     paintToggle();
+    paintRingVars();
     updateRingColors();
   });
 
   function ringColors() {
-    return theme === 'dark'
-      ? { tokio: '#8fc26a', kioto: '#7ea3c4', sidney: '#5cc0af', text: '#eef1e0', faint: '#7c8768' }
-      : { tokio: '#4a6b2f', kioto: '#35506a', sidney: '#1c7d70', text: '#232a1c', faint: '#94957a' };
+    const c = { faint: theme === 'dark' ? '#7c8768' : '#94957a' };
+    LUGAR_IDS.forEach((id) => { c[id] = (LUGARES[id].color || {})[theme === 'dark' ? 'oscuro' : 'claro'] || c.faint; });
+    return c;
   }
+  paintRingVars();
 
   /* ---------- Data prep ---------- */
   const nodeById = new Map();
@@ -41,18 +96,15 @@
     degree.set(l.target, (degree.get(l.target) || 0) + 1);
   });
 
-  const GROUP_LABEL = {
-    cafe: 'Círculo del café', tokio: 'Red de Tokio', kioto: 'Red de Kioto',
-    puente: 'Puente Tokio–Kioto', retorno: 'Recurrente / Sídney', lugar: 'Lugar',
-  };
-  const GROUP_COLOR = {
-    cafe: '#4a6b2f', tokio: '#8a6b3f', kioto: '#35506a', puente: '#9c5b3f', retorno: '#1c7d70', lugar: '#6f5f49',
-  };
+  const GROUP_LABEL = { lugar: 'Lugar' };
+  const GROUP_COLOR = { lugar: '#6f5f49' };
+  Object.entries(GRUPOS).forEach(([id, g]) => { GROUP_LABEL[id] = g.etiqueta || g.nombre; GROUP_COLOR[id] = g.color; });
+  const DESTACADOS = new Set(CONFIG.destacados || []);
 
   function nodeRadius(n) {
     if (n.type === 'place') return 26;
     const base = 13;
-    const boost = n.id === 'maestro' || n.id === 'miho' || n.id === 'kippei' ? 8 : 0;
+    const boost = DESTACADOS.has(n.id) ? 8 : 0;
     return base + Math.min(degree.get(n.id) || 0, 6) * 1.6 + boost;
   }
 
@@ -118,7 +170,7 @@
   nodeSel.each(function (d) {
     const g = d3.select(this);
     const r = nodeRadius(d);
-    const ring = d.place === 'ambos' ? 'url(#grad-ambos)' : d.place === 'sidney' ? rc.sidney : d.place === 'kioto' ? rc.kioto : rc.tokio;
+    const ring = ringOf(d, rc);
 
     if (d.type === 'place') {
       g.append('rect')
@@ -149,10 +201,11 @@
     defs.selectAll('#grad-ambos').remove();
     const g = defs.append('linearGradient').attr('id', 'grad-ambos').attr('x1', '0%').attr('y1', '0%').attr('x2', '100%').attr('y2', '100%');
     const c = ringColors();
-    g.append('stop').attr('offset', '0%').attr('stop-color', c.tokio);
-    g.append('stop').attr('offset', '50%').attr('stop-color', c.tokio);
-    g.append('stop').attr('offset', '50%').attr('stop-color', c.kioto);
-    g.append('stop').attr('offset', '100%').attr('stop-color', c.kioto);
+    const a = c[AMBOS[0]] || c.faint, b = c[AMBOS[1]] || a;
+    g.append('stop').attr('offset', '0%').attr('stop-color', a);
+    g.append('stop').attr('offset', '50%').attr('stop-color', a);
+    g.append('stop').attr('offset', '50%').attr('stop-color', b);
+    g.append('stop').attr('offset', '100%').attr('stop-color', b);
   }
   refreshGradient();
 
@@ -160,7 +213,7 @@
     const c = ringColors();
     refreshGradient();
     nodeSel.each(function (d) {
-      const ring = d.place === 'ambos' ? 'url(#grad-ambos)' : d.place === 'sidney' ? c.sidney : d.place === 'kioto' ? c.kioto : c.tokio;
+      const ring = ringOf(d, c);
       d3.select(this).select('circle, rect').attr('stroke', ring);
     });
   }
@@ -233,7 +286,7 @@
     detailEmpty.hidden = true;
     detailContent.hidden = false;
 
-    const groupColor = GROUP_COLOR[d.group] || '#4a6b2f';
+    const groupColor = GROUP_COLOR[d.group] || '#6f5f49';
     detailKicker.textContent = GROUP_LABEL[d.group] || '';
     detailKicker.style.background = groupColor;
     detailName.textContent = d.name;
@@ -287,9 +340,9 @@
     btn.dataset.char = ch.charId;
     btn.innerHTML = `
       <span class="chip-swatch" style="background:${ch.color}"></span>
-      <span class="chip-num">Cap. ${ch.n} · ${ch.month}</span>
+      <span class="chip-num">Cap. ${ch.n}${(ch.subtitulo || ch.month || ch.colorName) ? ' · ' + (ch.subtitulo || ch.month || ch.colorName) : ''}</span>
       <span class="chip-title">${ch.title}</span>
-      <span class="chip-place">${ch.place === 'tokio' ? 'Tokio' : 'Kioto'}</span>
+      <span class="chip-place">${(LUGARES[ch.place] || {}).nombre || ''}</span>
     `;
     btn.addEventListener('click', () => selectNode(ch.charId));
     stripEl.appendChild(btn);

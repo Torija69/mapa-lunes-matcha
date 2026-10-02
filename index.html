@@ -3,10 +3,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Mapa de relaciones — Mis lunes con aroma a matcha</title>
-<meta name="description" content="Mapa interactivo de personajes de la novela Mis lunes con aroma a matcha, de Michiko Aoyama: el Maestro, Kippei, los clientes recurrentes y la red que conecta Tokio con Kioto — y con Sídney." />
+<title>Mapa de relaciones</title>
+<meta name="description" content="" />
 
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%234a6b2f'/%3E%3Ccircle cx='16' cy='17' r='7' fill='%23f5f1e2'/%3E%3Cpath d='M12 12c0-2 1.6-2 1.6-4M16 12c0-2 1.6-2 1.6-4M20 12c0-2 1.6-2 1.6-4' stroke='%237fa65c' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%234a6b2f'/%3E%3Ccircle cx='10' cy='11' r='3' fill='%23f5f1e2'/%3E%3Ccircle cx='22' cy='12' r='3' fill='%23f5f1e2'/%3E%3Ccircle cx='15' cy='22' r='3' fill='%23f5f1e2'/%3E%3Cpath d='M10 11L22 12L15 22Z' stroke='%23f5f1e2' fill='none'/%3E%3C/svg%3E" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,21 +22,19 @@
   <header class="site-header">
     <div class="header-inner">
       <div class="brand">
-        <svg class="brand-mark" width="34" height="34" viewBox="0 0 32 32" fill="none" aria-label="Café Marble">
+        <svg class="brand-mark" id="cfg-icono" width="34" height="34" viewBox="0 0 32 32" fill="none" aria-hidden="true">
           <rect width="32" height="32" rx="7" fill="var(--color-primary)"/>
-          <circle cx="16" cy="17" r="7" fill="var(--color-surface)"/>
-          <path d="M12 12c0-2 1.6-2 1.6-4M16 12c0-2 1.6-2 1.6-4M20 12c0-2 1.6-2 1.6-4" stroke="var(--color-primary)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M10 11L22 12L15 22Z" stroke="var(--color-surface)" stroke-width="1.4" fill="none"/>
+          <circle cx="10" cy="11" r="3" fill="var(--color-surface)"/><circle cx="22" cy="12" r="3" fill="var(--color-surface)"/><circle cx="15" cy="22" r="3" fill="var(--color-surface)"/>
         </svg>
         <div class="brand-text">
-          <p class="eyebrow">Michiko Aoyama · Novela coral</p>
-          <h1>Mapa de relaciones del Café Matcha</h1>
+          <p class="eyebrow" id="cfg-eyebrow"></p>
+          <h1 id="cfg-titulo"></h1>
         </div>
       </div>
       <button class="theme-toggle" data-theme-toggle aria-label="Cambiar a modo oscuro" title="Cambiar tema"></button>
     </div>
-    <p class="header-lede">
-      <em>Mis lunes con aroma a matcha</em> es la segunda entrega de la bilogía "El pequeño café de Tokio": doce capítulos —uno por mes— que arrancan junto al Maestro en el Café Marble un lunes de enero y se despliegan, cliente a cliente, hasta la antigua Kioto. Explora quién conoce a quién, qué vínculos son explícitos y cuáles solo se insinúan, y cómo cinco personajes —Mark, Atsuko, Teruya, Asami y Takumi— tienden un hilo hasta la novela anterior y hasta Sídney.
-    </p>
+    <p class="header-lede" id="cfg-intro"></p>
   </header>
 
   <main class="layout">
@@ -50,11 +48,6 @@
 
         <div class="chip-group" id="group-filters" role="group" aria-label="Filtrar por círculo narrativo">
           <button class="chip active" data-group="all">Todos</button>
-          <button class="chip" data-group="cafe">Círculo del café</button>
-          <button class="chip" data-group="tokio">Red de Tokio</button>
-          <button class="chip" data-group="kioto">Red de Kioto</button>
-          <button class="chip" data-group="puente">Puente Tokio–Kioto</button>
-          <button class="chip" data-group="retorno">Recurrentes / Sídney</button>
         </div>
 
         <div class="chip-group" id="type-filters" role="group" aria-label="Filtrar por tipo de vínculo">
@@ -74,31 +67,22 @@
             <span class="legend-title">Cómo leer el mapa</span>
             <svg class="legend-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
           </button>
-          <div class="legend-body" id="legend-body">
-            <div class="legend-row"><span class="legend-swatch ring-tokio"></span> Anillo verde matcha — personaje o lugar en Tokio</div>
-            <div class="legend-row"><span class="legend-swatch ring-kioto"></span> Anillo índigo — personaje o lugar en Kioto</div>
-            <div class="legend-row"><span class="legend-swatch ring-sidney"></span> Anillo turquesa — recurrente, vinculado a Sídney</div>
-            <div class="legend-row"><span class="legend-swatch ring-ambos"></span> Anillo bicolor — se mueve entre Tokio y Kioto</div>
-            <div class="legend-row"><span class="legend-line solid"></span> Vínculo explícito (familia, pareja, trabajo)</div>
-            <div class="legend-row"><span class="legend-line dashed"></span> Vínculo implícito (coincidencia, eco narrativo)</div>
-            <div class="legend-row"><span class="legend-swatch place-shape"></span> Rombo — lugar (Café Marble / Kioto)</div>
-            <p class="legend-hint">El color de relleno es una paleta estacional propia de este mapa: la novela no asigna un color por capítulo, a diferencia de su precuela.</p>
-          </div>
+          <div class="legend-body" id="legend-body"></div>
         </div>
 
         <div class="hint-pill" id="hint-pill">Arrastra, haz zoom y pulsa sobre un nodo para seguir su hilo narrativo</div>
       </div>
 
-      <div class="chapter-strip" id="chapter-strip" aria-label="Los doce capítulos de la novela, en orden">
+      <div class="chapter-strip" id="chapter-strip" aria-label="Capítulos de la novela, en orden">
       </div>
     </section>
 
     <aside class="detail-panel" id="detail-panel">
       <div class="detail-empty" id="detail-empty">
-        <p class="eyebrow">Estructura coral</p>
-        <h2>Un café, doce meses, dos ciudades</h2>
-        <p>Cada capítulo adopta el punto de vista de un personaje distinto, empezando y terminando en el Café Marble de Tokio tras pasar por Kioto durante el verano y el otoño. Pulsa cualquier nodo del mapa —o cualquier capítulo de la franja inferior— para ver su ficha, sus vínculos explícitos e implícitos, y el capítulo en el que se revelan.</p>
-        <p class="detail-tip">Consejo: usa los filtros de arriba para aislar el círculo del café, la red que crece en Tokio, la red de Kioto o los personajes recurrentes que tienden el hilo hasta Sídney.</p>
+        <p class="eyebrow" id="cfg-panel-eyebrow"></p>
+        <h2 id="cfg-panel-titulo"></h2>
+        <p id="cfg-panel-texto"></p>
+        <p class="detail-tip" id="cfg-panel-consejo"></p>
       </div>
 
       <div class="detail-content" id="detail-content" hidden>
@@ -117,18 +101,8 @@
 
   <footer class="site-footer">
     <p><strong>Fuentes usadas para reconstruir el reparto y sus vínculos:</strong></p>
-    <p class="footer-links">
-      <a href="https://booklog.jp/item/1/4299044096" target="_blank" rel="noopener">Booklog — ficha y capítulos</a> ·
-      <a href="https://booklog.jp/item/1/4299020286" target="_blank" rel="noopener">Booklog — lista de personajes por capítulo</a> ·
-      <a href="https://ameblo.jp/nisemonomazyo/entry-12903153147.html" target="_blank" rel="noopener">Ameblo — resumen capítulo a capítulo</a> ·
-      <a href="https://book.kokoro-aozora.com/entry/aoyamamichiko/getsuyoubinomacchacafe" target="_blank" rel="noopener">Happy no dokusho note — reseña detallada</a> ·
-      <a href="https://ddnavi.com/article/d855481/a/" target="_blank" rel="noopener">Da Vinci Web — entrevista con la autora</a> ·
-      <a href="https://freshfiction.com/review.php?id=96926" target="_blank" rel="noopener">Fresh Fiction — reseña en inglés</a> ·
-      <a href="https://www.lifesheloves.com/my-asian-era/matcha-on-monday-michiko-aoyama" target="_blank" rel="noopener">Life She Loves — reseña en inglés</a> ·
-      <a href="https://www.zendalibros.com/michiko-aoyama-historias-agridulces-de-pequenas-vidas-en-japon/" target="_blank" rel="noopener">Zenda Libros — reseña en español</a> ·
-      <a href="https://www.planetadelibros.com/libro-mis-lunes-con-aroma-a-matcha/445451" target="_blank" rel="noopener">Planeta de Libros — ficha oficial</a>
-    </p>
-    <p class="footer-note">Mapa no oficial, elaborado a partir de reseñas y extractos públicos de la novela con fines de análisis literario.</p>
+    <p class="footer-links" id="cfg-fuentes"></p>
+    <p class="footer-note" id="cfg-nota-pie">Mapa no oficial, elaborado a partir de reseñas y extractos públicos de la novela con fines de análisis literario.</p>
   </footer>
 
 </div>

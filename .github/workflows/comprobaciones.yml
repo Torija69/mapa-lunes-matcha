@@ -20,3 +20,5 @@ jobs:
           node-version: 22
       - name: Comprobar la web
         run: python3 .github/scripts/comprobar_web.py
+      - name: Comprobar los datos del mapa (si es un mapa de libro)
+        run: if [ -f comprobar_mapa.js ]; then node comprobar_mapa.js; fi
