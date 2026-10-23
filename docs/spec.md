@@ -2,6 +2,8 @@
 
 ## Objetivo
 
+La candidata v1.2.0 adopta Torija 1.0.0 conservando los datos, el motor y la paleta base originales. Introducción desplegable y leyenda bajo el lienzo, abierta en escritorio y cerrada inicialmente en móvil. Se conserva el modo oscuro preexistente y se añade acceso por teclado a nodos y conexiones mediante una capa de presentación compartida con Café Tokio. D3 7.9.0 con SRI requiere Internet; fuentes locales. Publicación e integración pendientes de aprobación.
+
 Mostrar un mapa interactivo de las relaciones entre los personajes de «Mis lunes con aroma a matcha», de Michiko Aoyama, organizado por capítulos.
 
 ## Usuarios y uso

@@ -22,3 +22,5 @@ jobs:
         run: python3 .github/scripts/comprobar_web.py
       - name: Comprobar los datos del mapa (si es un mapa de libro)
         run: if [ -f comprobar_mapa.js ]; then node comprobar_mapa.js; fi
+      - name: Verificar identidad Torija e integridad del motor y datos
+        run: python3 -m unittest discover -s tests
