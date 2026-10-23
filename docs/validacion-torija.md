@@ -21,4 +21,5 @@
 ## Entrega
 
 - Seis pruebas automatizadas; paquete de15 recursos sin documentación interna.
-- Pendiente validar la vista previa alojada. Publicación e integración requieren aprobación.
+- Vista previa alojada verificada en un contexto nuevo: datos idénticos, ficha, teclado, filtros, búsqueda, temas, móvil y leyenda sin superposición ni errores.
+- Publicación e integración requieren aprobación.
