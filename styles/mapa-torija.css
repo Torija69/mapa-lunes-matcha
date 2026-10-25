@@ -1,0 +1,205 @@
+/* Torija 1.0.0: marco de lectura. Colores de datos y motor originales intactos. */
+body.torija {
+  --font-display: "Cabinet Grotesk", Satoshi, sans-serif;
+  --font-body: Satoshi, Arial, sans-serif;
+  --color-bg: var(--tj-bg);
+  --color-surface: var(--tj-surface);
+  --color-surface-2: var(--tj-surface);
+  --color-surface-offset: var(--tj-soft);
+  --color-surface-offset-2: #dce0c9;
+  --color-text: var(--tj-text);
+  --color-text-muted: var(--tj-muted);
+  --color-text-faint: var(--tj-muted);
+  --color-divider: #d5d7c9;
+  --color-border: #9b9f8b;
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+  --radius-sm: 8px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  color:var(--color-text);
+  background-color:var(--color-bg);
+  background-image: none;
+}
+/* Excepción documentada: estos dos mapas ya ofrecían modo oscuro. */
+[data-theme="dark"] body.torija {
+  --color-bg: #1c2018;
+  --color-surface: #252a20;
+  --color-surface-2: #252a20;
+  --color-surface-offset: #343c2b;
+  --color-surface-offset-2: #414c35;
+  --color-text: #f2f1e9;
+  --color-text-muted: #c3c9b5;
+  --color-text-faint: #c3c9b5;
+  --color-divider: #59614f;
+  --color-border: #7c876e;
+}
+.torija .app { padding:24px 24px 40px; }
+.torija .site-header {
+  padding:24px;
+  background:#292c23;
+  color:#fbfaf5;
+  border-radius:16px;
+  margin-bottom:24px;
+}
+.torija .header-inner { margin-bottom:0; align-items:center; }
+.torija .brand { min-width:0; }
+.torija .brand-text { min-width:0; }
+.torija .torija-brand {
+  display:inline;
+  font-family:var(--font-display);
+  font-weight:700;
+  font-size:16px;
+  color:#d1dc76;
+}
+.torija .site-header .eyebrow {
+  display:inline;
+  margin-left:10px;
+  color:#e0e3d4;
+  font-size:12px;
+  letter-spacing:.03em;
+  text-transform:none;
+}
+.torija .brand-text h1 {
+  color:#fbfaf5;
+  font-size:clamp(25px,2.6vw,34px);
+  font-weight:700;
+  line-height:1.15;
+  margin-top:8px;
+}
+.torija .brand-mark {
+  --color-primary:#d1dc76;
+  --color-surface:#292c23;
+  --color-error:#d1dc76;
+}
+.torija .theme-toggle {
+  min-width:44px;
+  min-height:44px;
+  color:#fbfaf5;
+  background:transparent;
+  border-color:#929984;
+}
+.torija .theme-toggle:hover { background:#3a4031; transform:none; }
+.torija .map-intro { margin-top:16px; }
+.torija .map-intro summary {
+  min-height:44px;
+  display:list-item;
+  width:fit-content;
+  padding-block:10px;
+  cursor:pointer;
+  font-size:14px;
+  color:#e0e3d4;
+}
+.torija .site-header .header-lede,
+.torija .site-header .header-lede em { color:#f2f1e9; }
+.torija .header-lede { margin-top:8px; max-width:90ch; font-size:15px; }
+.torija .layout { min-width:0; }
+.torija .graph-panel,.torija .detail-panel { min-width:0; border-color:var(--color-divider); }
+.torija .toolbar { gap:10px; padding:16px; }
+.torija .search-wrap {
+  min-height:44px;
+  border-radius:8px;
+  color:var(--color-text-muted);
+  flex-basis:100%;
+}
+.torija .search-wrap:focus-within { outline:2px solid var(--color-text); outline-offset:2px; }
+.torija .search-wrap input { min-height:28px; font-size:16px; }
+.torija .chip {
+  min-height:44px;
+  font-size:13px;
+  border-color:var(--color-border);
+  white-space:normal;
+  text-align:center;
+  padding:8px 12px;
+}
+.torija .chip:hover { border-color:var(--color-text); }
+.torija .chip.active {
+  background:#d1dc76;
+  color:#292c23;
+  border-color:#929c47;
+  font-weight:700;
+}
+.torija .reset-btn {
+  min-height:44px;
+  font-size:13px;
+  border:1px solid var(--color-border);
+  border-radius:8px;
+  color:var(--color-text);
+}
+.torija .reset-btn:hover { background:var(--color-surface-offset); }
+.torija .graph-stage { height:min(66vh,620px); }
+.torija .node-label { font-size:12px; }
+.torija .legend {
+  position:static;
+  max-width:none;
+  margin:16px;
+  background:var(--color-surface);
+  backdrop-filter:none;
+  border-color:var(--color-border);
+  border-radius:12px;
+  font-size:12px;
+}
+.torija .legend-title { font-size:12px; letter-spacing:.02em; }
+.torija .legend-header { min-height:44px; cursor:pointer; }
+.torija .legend-chevron { display:block; margin-left:auto; transform:rotate(-90deg); }
+.torija .legend.expanded .legend-chevron { transform:rotate(0deg); }
+.torija .legend-body { display:none; }
+.torija .legend.expanded .legend-body { display:grid; grid-template-columns:1fr 1fr; gap:8px 16px; }
+.torija .legend-hint { grid-column:1 / -1; }
+.torija .hint-pill {
+  background:var(--color-surface);
+  border:1px solid var(--color-border);
+  color:var(--color-text);
+  font-size:12px;
+}
+.torija .chapter-strip { padding:16px; gap:8px; }
+.torija .chapter-chip { width:132px; min-height:100px; }
+.torija .chapter-chip:hover { transform:none; border-color:var(--color-text); }
+.torija .chapter-chip.active-chapter {
+  outline:2px solid var(--color-text);
+  outline-offset:-2px;
+  background:var(--color-surface-offset);
+}
+.torija .chapter-chip .chip-num,
+.torija .chapter-chip .chip-place { font-size:12px; }
+.torija .chapter-chip .chip-title { font-size:13px; }
+.torija .detail-panel { padding:24px; }
+.torija .detail-empty h2 { font-weight:700; }
+.torija .close-detail { width:44px; height:44px; border-radius:8px; }
+.torija #detail-name { padding-right:52px; font-weight:700; }
+.torija .detail-kicker { max-width:calc(100% - 52px); font-size:12px; }
+.torija .detail-connections li { min-height:44px; }
+.torija .conn-tag { font-size:12px; }
+.torija .site-footer { margin-top:24px; padding-top:20px; font-size:13px; }
+.torija .torija-version { margin-top:12px; font-size:12px; }
+.torija :focus-visible { outline:2px solid var(--color-text); outline-offset:3px; }
+.torija .site-header :focus-visible { outline-color:#d1dc76; }
+.torija .node:focus-visible { outline:none; }
+.torija .node:focus-visible circle,
+.torija .node:focus-visible rect { stroke-width:5px; }
+@media(max-width:960px) {
+  .torija .detail-panel { position:static; }
+}
+@media(max-width:640px) {
+  .torija .app { padding:16px 16px 32px; }
+  .torija .site-header { padding:16px; }
+  .torija .header-inner { align-items:flex-start; gap:12px; }
+  .torija .brand { align-items:flex-start; gap:10px; }
+  .torija .brand-mark { width:26px; height:26px; margin-top:4px; }
+  .torija .site-header .eyebrow { display:block; margin:4px 0 0; }
+  .torija .brand-text h1 { font-size:25px; }
+  .torija .toolbar { padding:12px; }
+  .torija .search-wrap { min-width:0; }
+  .torija .chip-group { min-width:0; gap:8px; }
+  .torija .chip { font-size:13px; }
+  .torija .reset-btn { margin-left:0; }
+  .torija .graph-stage { height:540px; }
+  .torija .legend { margin:12px; padding:8px 12px; }
+  .torija .legend.expanded .legend-body { display:block; max-height:none; overflow:visible; }
+  .torija .chapter-strip { padding:12px; }
+  .torija .detail-panel { padding:20px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .torija, .torija *, .torija *::before, .torija *::after { transition:none!important; scroll-behavior:auto!important; }
+}

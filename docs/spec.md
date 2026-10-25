@@ -26,7 +26,9 @@ Mostrar un mapa interactivo de las relaciones entre los personajes de «Mis lune
 
 ## Patrón
 
-Mapa de relaciones de un libro (ver `catalogo-proyectos/componentes.md`), basado en la plantilla `catalogo-proyectos/plantillas/mapa-libro/`: `index.html` y `script.js` son los de la plantilla y no se tocan; lo propio de este libro está en `data.js` y la paleta en `style.css`.
+Mapa de relaciones de un libro (ver `catalogo-proyectos/componentes.md`), basado en la plantilla `catalogo-proyectos/plantillas/mapa-libro/`. En v1.2.0, `index.html` incorpora la presentación Torija, `styles/` y `torija-ui.js`; `script.js`, `data.js` y `style.css` se conservan sin cambios. D3 7.9.0 se carga desde CDN con integridad comprobada; no requiere instalación ni servidor propio.
+
+La publicación vigente es https://mislunesconaromaamatcha.pplx.app/ y tiene acceso libre. La reconciliación de GitHub del 25 de octubre no cambia los datos ni vuelve a publicar.
 
 ## Criterios de aceptación
 
